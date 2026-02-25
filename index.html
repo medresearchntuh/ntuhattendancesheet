@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>台大醫院醫學研究部簽到表產生器</title>
+<title>台大醫院醫學研究部簽到表</title>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
 <style>
   @import url('https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@400;600;700&family=Noto+Sans+TC:wght@300;400;500&display=swap');
@@ -395,7 +395,7 @@
   table {
     width: 100%;
     border-collapse: collapse;
-    font-size: 18px;
+    font-size: 20px;
   }
 
   thead tr {
@@ -405,7 +405,7 @@
 
   thead th {
     padding: 10px 16px;
-    text-align: left;
+    text-align: center;
     font-family: 'Noto Serif TC', serif;
     font-weight: 600;
     letter-spacing: 1px;
@@ -426,6 +426,7 @@
   td {
     padding: 14px 16px;
     vertical-align: middle;
+    text-align: center;
   }
 
   .td-num {
@@ -500,7 +501,12 @@
 
   /* ===== PRINT STYLES ===== */
   @media print {
-    @page { margin: 15mm 12mm; }
+    @page {
+      margin: 15mm 12mm;
+      /* suppress browser-added URL/date headers/footers */
+    }
+    /* hide URL in some browsers */
+    a[href]:after { content: none !important; }
     * { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
     body { background: white; }
     .app-header, .left-panel, .app-footer,
@@ -521,22 +527,22 @@
 
     /* Table */
     .sheet-table-wrapper { padding: 8px 20px; }
-    table { font-size: 13px; border-collapse: collapse; width: 100%; }
+    table { font-size: 25px; border-collapse: collapse; width: 100%; }
 
     /* thead: repeat on every page */
     thead { display: table-header-group; }
     thead tr { background: #444 !important; }
-    thead th { color: #fff !important; padding: 9px 12px; font-size: 14px; }
+    thead th { color: #fff !important; padding: 10px 12px; font-size: 25px; text-align: center; }
 
     /* tbody: all rows white */
     tbody tr { border-bottom: 1px solid #ccc !important; background: #fff !important; }
     tbody tr:nth-child(even) { background: #fff !important; }
     tbody tr:hover { background: #fff !important; }
 
-    td { padding: 10px 12px; background: #fff !important; }
-    .td-num { color: #333; }
-    .sig-box { width: 100px; height: 30px; border-bottom: 1px solid #888; display: inline-block; background: #fff !important; }
-    .print-footer { display: block !important; text-align: center; font-size: 10px; color: #555; margin-top: 16px; padding-top: 8px; border-top: 1px solid #ccc; }
+    td { padding: 10px 12px; background: #fff !important; text-align: center; }
+    .td-num { color: #333; text-align: center; }
+    .sig-box { width: 120px; height: 32px; border-bottom: 1px solid #888; display: inline-block; background: #fff !important; }
+    .print-footer { display: block !important; text-align: center; font-size: 11px; color: #555; margin-top: 16px; padding-top: 8px; border-top: 1px solid #ccc; }
   }
   .print-footer { display: none; }
 </style>
