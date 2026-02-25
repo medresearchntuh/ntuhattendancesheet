@@ -6,7 +6,7 @@
 <title>台大醫院醫學研究部簽到表</title>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
 <style>
-  @import url('https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@400;600;700&family=Noto+Sans+TC:wght@300;400;500&display=swap');
+  @import url('https://fonts.googleapis.com/css2?family=Chiron+GoRound+TC:wght@300;400;500;600;700&display=swap');
 
   :root {
     --navy: #1a2b4a;
@@ -25,7 +25,7 @@
   * { box-sizing: border-box; margin: 0; padding: 0; }
 
   body {
-    font-family: 'Noto Sans TC', sans-serif;
+    font-family: 'Chiron GoRound TC', sans-serif;
     background: var(--cream);
     color: var(--text);
     min-height: 100vh;
@@ -47,13 +47,13 @@
     border: 2px solid var(--gold);
     border-radius: 50%;
     display: flex; align-items: center; justify-content: center;
-    font-family: 'Noto Serif TC', serif;
+    font-family: 'Chiron GoRound TC', sans-serif;
     font-size: 18px; color: var(--gold);
     flex-shrink: 0;
   }
 
   .header-text h1 {
-    font-family: 'Noto Serif TC', serif;
+    font-family: 'Chiron GoRound TC', sans-serif;
     font-size: 20px; font-weight: 700;
     letter-spacing: 2px;
   }
@@ -79,7 +79,7 @@
   }
 
   .section-title {
-    font-family: 'Noto Serif TC', serif;
+    font-family: 'Chiron GoRound TC', sans-serif;
     font-size: 14px; font-weight: 600;
     color: var(--navy);
     letter-spacing: 1px;
@@ -107,7 +107,7 @@
     padding: 10px 14px;
     border: 1px solid var(--border);
     border-radius: 6px;
-    font-family: 'Noto Sans TC', sans-serif;
+    font-family: 'Chiron GoRound TC', sans-serif;
     font-size: 14px;
     background: var(--cream);
     color: var(--text);
@@ -137,7 +137,7 @@
     width: 100%; padding: 10px;
     border: none; border-radius: 6px;
     cursor: pointer;
-    font-family: 'Noto Sans TC', sans-serif;
+    font-family: 'Chiron GoRound TC', sans-serif;
     font-size: 13px; font-weight: 500;
     letter-spacing: 0.5px;
     transition: all 0.2s;
@@ -270,7 +270,7 @@
     border: none; background: var(--cream);
     color: var(--text-light);
     cursor: pointer;
-    font-family: 'Noto Sans TC', sans-serif;
+    font-family: 'Chiron GoRound TC', sans-serif;
     font-size: 12px; font-weight: 500;
     transition: all 0.18s;
     letter-spacing: 0.5px;
@@ -291,7 +291,7 @@
     padding: 10px 14px;
     border: 1px solid var(--border);
     border-radius: 6px;
-    font-family: 'Noto Sans TC', sans-serif;
+    font-family: 'Chiron GoRound TC', sans-serif;
     font-size: 13px;
     background: var(--cream);
     color: var(--text);
@@ -343,7 +343,7 @@
     padding: 4px 10px;
     border-radius: 4px;
     cursor: pointer;
-    font-family: 'Noto Sans TC', sans-serif;
+    font-family: 'Chiron GoRound TC', sans-serif;
     transition: all 0.15s;
   }
 
@@ -386,7 +386,7 @@
   }
 
   .sheet-title {
-    font-family: 'Noto Serif TC', serif;
+    font-family: 'Chiron GoRound TC', sans-serif;
     font-size: 28px; font-weight: 700;
     letter-spacing: 5px;
     margin-bottom: 4px;
@@ -423,7 +423,7 @@
   table {
     width: 100%;
     border-collapse: collapse;
-    font-size: 22px;
+    font-size: 18px;
   }
 
   thead tr {
@@ -432,9 +432,9 @@
   }
 
   thead th {
-    padding: 10px 16px;
+    padding: 7px 12px;
     text-align: center;
-    font-family: 'Noto Serif TC', serif;
+    font-family: 'Chiron GoRound TC', sans-serif;
     font-weight: 600;
     letter-spacing: 1px;
     font-size: 18px;
@@ -452,7 +452,7 @@
   tbody tr:nth-child(even):hover { background: var(--cream); }
 
   td {
-    padding: 14px 16px;
+    padding: 8px 12px;
     vertical-align: middle;
     text-align: center;
   }
@@ -468,7 +468,7 @@
 
   .sig-box {
     display: inline-block;
-    width: 120px; height: 36px;
+    width: 120px; height: 26px;
     border-bottom: 1px solid #aaa;
     background: transparent;
   }
@@ -499,7 +499,7 @@
   }
 
   .unit-group-header td {
-    font-family: 'Noto Serif TC', serif;
+    font-family: 'Chiron GoRound TC', sans-serif;
     font-size: 11px;
     font-weight: 600;
     color: var(--navy);
@@ -576,18 +576,18 @@
     #blankSheet { display: none; }
     body.print-blank #blankSheet { display: block !important; }
     #blankSheet .blank-header { background: #fff !important; color: #000 !important; padding: 12px 20px; border-bottom: 2px solid #000; text-align: center; }
-    #blankSheet .blank-title { font-family: 'Noto Serif TC', serif; font-size: 22px; font-weight: 700; letter-spacing: 4px; color: #000; }
+    #blankSheet .blank-title { font-family: 'Chiron GoRound TC', sans-serif; font-size: 22px; font-weight: 700; letter-spacing: 4px; color: #000; }
     #blankSheet .blank-subtitle { font-size: 11px; color: #444; letter-spacing: 2px; margin-top: 4px; }
     #blankSheet .blank-meta { display: flex; gap: 48px; justify-content: center; padding: 10px 20px; border-bottom: 1px solid #000; font-size: 14px; }
     #blankSheet .blank-meta-item { display: flex; gap: 8px; align-items: center; }
     #blankSheet .blank-meta-label { font-weight: 700; font-size: 13px; }
     #blankSheet .blank-meta-line { display: inline-block; width: 160px; border-bottom: 1px solid #000; height: 20px; }
-    #blankSheet table { width: 100%; border-collapse: collapse; font-size: 22px; }
+    #blankSheet table { width: 100%; border-collapse: collapse; font-size: 18px; }
     #blankSheet thead tr { background: #444 !important; }
-    #blankSheet thead th { color: #fff !important; padding: 10px 12px; font-size: 22px; text-align: center; font-family: 'Noto Serif TC', serif; font-weight: 600; }
+    #blankSheet thead th { color: #fff !important; padding: 7px 12px; font-size: 18px; text-align: center; font-family: 'Chiron GoRound TC', sans-serif; font-weight: 600; }
     #blankSheet thead { display: table-header-group; }
     #blankSheet tbody tr { border-bottom: 1px solid #ccc; background: #fff !important; }
-    #blankSheet td { padding: 14px 12px; text-align: center; background: #fff !important; font-size: 22px; }
+    #blankSheet td { padding: 7px 12px; text-align: center; background: #fff !important; font-size: 18px; }
     #blankSheet .blank-table-wrapper { padding: 8px 20px; }
     #blankSheet .blank-footer { text-align: center; font-size: 11px; color: #555; margin-top: 16px; padding-top: 8px; border-top: 1px solid #ccc; }
 
@@ -603,21 +603,21 @@
 
     /* Table */
     .sheet-table-wrapper { padding: 8px 20px; }
-    table { font-size: 22px; border-collapse: collapse; width: 100%; }
+    table { font-size: 18px; border-collapse: collapse; width: 100%; }
 
     /* thead: repeat on every page */
     thead { display: table-header-group; }
     thead tr { background: #444 !important; }
-    thead th { color: #fff !important; padding: 10px 12px; font-size: 22px; text-align: center; }
+    thead th { color: #fff !important; padding: 7px 12px; font-size: 18px; text-align: center; }
 
     /* tbody: all rows white */
     tbody tr { border-bottom: 1px solid #ccc !important; background: #fff !important; }
     tbody tr:nth-child(even) { background: #fff !important; }
     tbody tr:hover { background: #fff !important; }
 
-    td { padding: 10px 12px; background: #fff !important; text-align: center; }
+    td { padding: 7px 12px; background: #fff !important; text-align: center; }
     .td-num { color: #333; text-align: center; }
-    .sig-box { width: 120px; height: 32px; border-bottom: 1px solid #888; display: inline-block; background: #fff !important; }
+    .sig-box { width: 120px; height: 24px; border-bottom: 1px solid #888; display: inline-block; background: #fff !important; }
     .print-footer { display: block !important; text-align: center; font-size: 11px; color: #555; margin-top: 16px; padding-top: 8px; border-top: 1px solid #ccc; }
   }
   .print-footer { display: none; }
@@ -1061,7 +1061,7 @@
         <td style="width:48px">${i}</td>
         <td></td>
         <td></td>
-        <td><div style="width:120px;height:32px;border-bottom:1px solid #888;display:inline-block"></div></td>
+        <td><div style="width:120px;height:24px;border-bottom:1px solid #888;display:inline-block"></div></td>
       </tr>`;
     }
 
