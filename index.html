@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>臺大醫院 簽到表產生器</title>
+<title>台大醫院醫學研究部簽到表產生器</title>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
 <style>
   @import url('https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@400;600;700&family=Noto+Sans+TC:wght@300;400;500&display=swap');
@@ -202,6 +202,23 @@
   }
   .remove-btn:hover { background: #fde8e8; }
 
+  .person-tag--dup {
+    border-color: #e0a0a0;
+    background: #fff5f5;
+  }
+
+  .dup-badge {
+    display: inline-block;
+    background: #cc4444;
+    color: #fff;
+    font-size: 10px;
+    padding: 1px 5px;
+    border-radius: 3px;
+    margin-left: 4px;
+    vertical-align: middle;
+    font-weight: 600;
+  }
+
   .person-count {
     font-size: 11px; color: var(--text-light);
     margin-top: 8px; text-align: right;
@@ -392,7 +409,7 @@
     font-family: 'Noto Serif TC', serif;
     font-weight: 600;
     letter-spacing: 1px;
-    font-size: 14px;
+    font-size: 18px;
   }
 
   thead th:last-child { text-align: center; width: 160px; }
@@ -483,6 +500,7 @@
 
   /* ===== PRINT STYLES ===== */
   @media print {
+    @page { margin: 15mm 12mm; }
     * { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
     body { background: white; }
     .app-header, .left-panel, .app-footer,
@@ -490,22 +508,35 @@
     .app-body { display: block; }
     .right-panel { padding: 0; overflow: visible; }
     .sheet-wrapper { box-shadow: none; border: none; border-radius: 0; }
-    .sheet-header { background: #000 !important; color: #fff !important; padding: 16px 24px; }
-    .sheet-title { font-size: 18px !important; letter-spacing: 3px; }
-    .sheet-subtitle { color: #bbb !important; font-size: 11px !important; }
-    .sheet-meta { background: #333 !important; padding: 8px 24px; gap: 32px; }
-    .meta-label { color: #bbb !important; }
-    .meta-item { color: #fff !important; font-size: 12px; }
-    .sheet-table-wrapper { padding: 16px 24px; }
-    table { font-size: 12px; border-collapse: collapse; width: 100%; }
-    thead tr { background: #222 !important; }
-    thead th { color: #fff !important; padding: 8px 12px; font-size: 11px; }
-    tbody tr { border-bottom: 1px solid #ccc !important; }
-    tbody tr:nth-child(even) { background: #f5f5f5 !important; }
-    td { padding: 9px 12px; }
-    .td-num { color: #555; }
-    .sig-box { width: 100px; height: 30px; border-bottom: 1px solid #888; display: inline-block; }
-    .print-footer { display: block !important; text-align: center; font-size: 10px; color: #888; margin-top: 20px; padding-top: 10px; border-top: 1px solid #ddd; }
+
+    /* Title area: white background, black text */
+    .sheet-header { background: #fff !important; color: #000 !important; padding: 12px 20px; border-bottom: 2px solid #000; }
+    .sheet-title { font-size: 20px !important; letter-spacing: 3px; color: #000 !important; }
+    .sheet-subtitle { color: #444 !important; font-size: 11px !important; }
+
+    /* Meta bar: white background, black text */
+    .sheet-meta { background: #fff !important; padding: 8px 20px; gap: 32px; border-bottom: 1px solid #000; border-top: none; }
+    .meta-label { color: #000 !important; font-weight: 700; }
+    .meta-item { color: #000 !important; font-size: 13px; }
+
+    /* Table */
+    .sheet-table-wrapper { padding: 8px 20px; }
+    table { font-size: 13px; border-collapse: collapse; width: 100%; }
+
+    /* thead: repeat on every page */
+    thead { display: table-header-group; }
+    thead tr { background: #444 !important; }
+    thead th { color: #fff !important; padding: 9px 12px; font-size: 14px; }
+
+    /* tbody: all rows white */
+    tbody tr { border-bottom: 1px solid #ccc !important; background: #fff !important; }
+    tbody tr:nth-child(even) { background: #fff !important; }
+    tbody tr:hover { background: #fff !important; }
+
+    td { padding: 10px 12px; background: #fff !important; }
+    .td-num { color: #333; }
+    .sig-box { width: 100px; height: 30px; border-bottom: 1px solid #888; display: inline-block; background: #fff !important; }
+    .print-footer { display: block !important; text-align: center; font-size: 10px; color: #555; margin-top: 16px; padding-top: 8px; border-top: 1px solid #ccc; }
   }
   .print-footer { display: none; }
 </style>
@@ -662,11 +693,22 @@
     });
   }
 
+  // --- Duplicate check ---
+  function isDuplicate(name) {
+    return persons.some(p => p.name === name);
+  }
+
   // --- Single add ---
   function addPerson() {
     const name = document.getElementById('inputName').value.trim();
     const unit = document.getElementById('inputUnit').value.trim();
     if (!name || !unit) { alert('請填寫姓名和單位'); return; }
+    if (isDuplicate(name)) {
+      alert(`「${name}」已在名單中，略過重複報名。`);
+      document.getElementById('inputName').value = '';
+      document.getElementById('inputName').focus();
+      return;
+    }
     persons.push({ id: Date.now() + Math.random(), name, unit });
     document.getElementById('inputName').value = '';
     document.getElementById('inputName').focus();
@@ -705,12 +747,23 @@
     const text = document.getElementById('bulkInput').value;
     const { results, errors } = parseBulkLines(text);
     if (results.length === 0) { alert('未解析到有效資料，請確認格式為「姓名，單位」每行一筆。'); return; }
-    persons.push(...results);
+    const dupes = [], unique = [];
+    results.forEach(r => {
+      if (isDuplicate(r.name) || unique.some(u => u.name === r.name)) {
+        dupes.push(r.name);
+      } else {
+        unique.push(r);
+      }
+    });
+    persons.push(...unique);
     document.getElementById('bulkInput').value = '';
     document.getElementById('bulkHint').textContent = '';
     renderPersonList();
     renderPreview();
-    if (errors.length) alert(`已匯入 ${results.length} 筆，但以下 ${errors.length} 行格式有誤略過：\n${errors.join('\n')}`);
+    let msg = `已匯入 ${unique.length} 筆`;
+    if (dupes.length) msg += `\n\n以下 ${dupes.length} 筆重複姓名已自動略過：\n${dupes.join('、')}`;
+    if (errors.length) msg += `\n\n以下 ${errors.length} 行格式有誤略過：\n${errors.join('\n')}`;
+    if (dupes.length || errors.length) alert(msg);
   }
 
   function clearBulk() {
@@ -747,10 +800,14 @@
     header.style.display = 'flex';
     countEl.textContent = `共 ${persons.length} 位`;
 
+    // detect duplicates within list for display
+    const nameCounts = {};
+    persons.forEach(p => { nameCounts[p.name] = (nameCounts[p.name] || 0) + 1; });
+
     list.innerHTML = persons.map(p => `
-      <div class="person-tag">
+      <div class="person-tag${nameCounts[p.name] > 1 ? ' person-tag--dup' : ''}">
         <div class="person-info">
-          <span class="person-name">${p.name}</span>
+          <span class="person-name">${p.name}${nameCounts[p.name] > 1 ? ' <span class="dup-badge">重複</span>' : ''}</span>
           <span class="person-unit">${p.unit}</span>
         </div>
         <button class="remove-btn" onclick="removePerson(${p.id})">✕</button>
