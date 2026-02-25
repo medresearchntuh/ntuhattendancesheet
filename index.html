@@ -224,6 +224,34 @@
     margin-top: 8px; text-align: right;
   }
 
+  /* Category section */
+  .category-section { margin-top: 28px; }
+
+  .category-hint {
+    font-size: 11px; color: var(--text-light);
+    margin-bottom: 10px; line-height: 1.5;
+  }
+
+  .category-checks {
+    display: flex; flex-wrap: wrap; gap: 8px;
+  }
+
+  .cat-label {
+    display: flex; align-items: center; gap: 5px;
+    background: var(--cream);
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    padding: 5px 12px;
+    font-size: 13px; font-weight: 500;
+    color: var(--navy);
+    cursor: pointer;
+    transition: all 0.15s;
+    user-select: none;
+  }
+
+  .cat-label:hover { border-color: var(--gold); background: var(--cream-dark); }
+  .cat-label input[type="checkbox"] { accent-color: var(--navy); width: 14px; height: 14px; cursor: pointer; }
+
   /* Export buttons */
   .export-section { margin-top: 28px; display: flex; flex-direction: column; gap: 8px; }
 
@@ -395,7 +423,7 @@
   table {
     width: 100%;
     border-collapse: collapse;
-    font-size: 20px;
+    font-size: 22px;
   }
 
   thead tr {
@@ -443,6 +471,27 @@
     width: 120px; height: 36px;
     border-bottom: 1px solid #aaa;
     background: transparent;
+  }
+
+  /* Category check box in table */
+  .cat-check-box {
+    display: inline-block;
+    width: 28px; height: 28px;
+    border: 2px solid #aaa;
+    border-radius: 4px;
+    background: transparent;
+  }
+
+  /* Category pills in meta bar */
+  .cat-badges { display: inline-flex; flex-wrap: wrap; gap: 4px; vertical-align: middle; }
+  .cat-pill {
+    display: inline-block;
+    background: var(--gold);
+    color: var(--navy);
+    font-size: 12px; font-weight: 700;
+    padding: 2px 10px;
+    border-radius: 20px;
+    letter-spacing: 0.5px;
   }
 
   .unit-group-header {
@@ -499,6 +548,12 @@
   }
   .btn-print:hover { background: #2d3748; transform: translateY(-1px); }
 
+  .btn-blank {
+    background: #2d6a4f;
+    color: var(--white);
+  }
+  .btn-blank:hover { background: #1b4332; transform: translateY(-1px); }
+
   /* ===== PRINT STYLES ===== */
   @media print {
     @page {
@@ -515,6 +570,27 @@
     .right-panel { padding: 0; overflow: visible; }
     .sheet-wrapper { box-shadow: none; border: none; border-radius: 0; }
 
+    /* Blank sheet print mode */
+    body.print-blank .right-panel { display: none !important; }
+    body.print-blank .print-footer { display: none !important; }
+    #blankSheet { display: none; }
+    body.print-blank #blankSheet { display: block !important; }
+    #blankSheet .blank-header { background: #fff !important; color: #000 !important; padding: 12px 20px; border-bottom: 2px solid #000; text-align: center; }
+    #blankSheet .blank-title { font-family: 'Noto Serif TC', serif; font-size: 22px; font-weight: 700; letter-spacing: 4px; color: #000; }
+    #blankSheet .blank-subtitle { font-size: 11px; color: #444; letter-spacing: 2px; margin-top: 4px; }
+    #blankSheet .blank-meta { display: flex; gap: 48px; justify-content: center; padding: 10px 20px; border-bottom: 1px solid #000; font-size: 14px; }
+    #blankSheet .blank-meta-item { display: flex; gap: 8px; align-items: center; }
+    #blankSheet .blank-meta-label { font-weight: 700; font-size: 13px; }
+    #blankSheet .blank-meta-line { display: inline-block; width: 160px; border-bottom: 1px solid #000; height: 20px; }
+    #blankSheet table { width: 100%; border-collapse: collapse; font-size: 22px; }
+    #blankSheet thead tr { background: #444 !important; }
+    #blankSheet thead th { color: #fff !important; padding: 10px 12px; font-size: 22px; text-align: center; font-family: 'Noto Serif TC', serif; font-weight: 600; }
+    #blankSheet thead { display: table-header-group; }
+    #blankSheet tbody tr { border-bottom: 1px solid #ccc; background: #fff !important; }
+    #blankSheet td { padding: 14px 12px; text-align: center; background: #fff !important; font-size: 22px; }
+    #blankSheet .blank-table-wrapper { padding: 8px 20px; }
+    #blankSheet .blank-footer { text-align: center; font-size: 11px; color: #555; margin-top: 16px; padding-top: 8px; border-top: 1px solid #ccc; }
+
     /* Title area: white background, black text */
     .sheet-header { background: #fff !important; color: #000 !important; padding: 12px 20px; border-bottom: 2px solid #000; }
     .sheet-title { font-size: 20px !important; letter-spacing: 3px; color: #000 !important; }
@@ -527,12 +603,12 @@
 
     /* Table */
     .sheet-table-wrapper { padding: 8px 20px; }
-    table { font-size: 25px; border-collapse: collapse; width: 100%; }
+    table { font-size: 22px; border-collapse: collapse; width: 100%; }
 
     /* thead: repeat on every page */
     thead { display: table-header-group; }
     thead tr { background: #444 !important; }
-    thead th { color: #fff !important; padding: 10px 12px; font-size: 25px; text-align: center; }
+    thead th { color: #fff !important; padding: 10px 12px; font-size: 22px; text-align: center; }
 
     /* tbody: all rows white */
     tbody tr { border-bottom: 1px solid #ccc !important; background: #fff !important; }
@@ -620,11 +696,24 @@
       <div class="person-count" id="personCount" style="display:none">尚未新增人員</div>
     </div>
 
+    <div class="category-section">
+      <div class="section-title" style="margin-top:8px"><span class="icon">🏷</span> 人員類別篩選</div>
+      <p class="category-hint">勾選本次出席人員的身份類別，會顯示在簽到表資訊列</p>
+      <div class="category-checks">
+        <label class="cat-label"><input type="checkbox" value="院內" onchange="renderPreview()"> 院內</label>
+        <label class="cat-label"><input type="checkbox" value="院外" onchange="renderPreview()"> 院外</label>
+        <label class="cat-label"><input type="checkbox" value="醫學院" onchange="renderPreview()"> 醫學院</label>
+        <label class="cat-label"><input type="checkbox" value="校總區" onchange="renderPreview()"> 校總區</label>
+        <label class="cat-label"><input type="checkbox" value="校外人士" onchange="renderPreview()"> 校外人士</label>
+      </div>
+    </div>
+
     <div class="export-section">
       <div class="section-title" style="margin-top:8px"><span class="icon">📤</span> 匯出 &amp; 列印</div>
       <button class="btn btn-gold" onclick="exportExcel()">⬇ 匯出 Excel (.xlsx)</button>
       <button class="btn btn-outline" onclick="exportCSV()">⬇ 匯出 CSV</button>
-      <button class="btn btn-print" onclick="printSheet()">🖨 列印簽到表</button>
+      <button class="btn btn-print" onclick="printSheet()">🖨 列印簽到表（預填名單）</button>
+      <button class="btn btn-blank" onclick="printBlank()">📋 列印現場報名空白表</button>
     </div>
 
   </aside>
@@ -646,6 +735,9 @@
       © 2026 台大醫院 醫學研究部 All rights reserved．系統建置：醫學研究部陳巧瑜管理師
     </div>
   </main>
+
+  <!-- Hidden blank registration sheet for print -->
+  <div id="blankSheet" style="display:none"></div>
 
 </div>
 
@@ -821,6 +913,12 @@
     `).join('');
   }
 
+  // --- Get active categories ---
+  function getActiveCategories() {
+    return [...document.querySelectorAll('.category-checks input[type=checkbox]:checked')]
+      .map(cb => cb.value);
+  }
+
   // --- Render preview ---
   function renderPreview() {
     const title = document.getElementById('sheetTitle').value || '臺大醫院醫學研究部學術演講簽到表';
@@ -829,6 +927,7 @@
     const dateStr = dateVal ? formatDate(dateVal) : '（未填寫）';
     const sorted = sortedPersons();
     const sheet = document.getElementById('previewSheet');
+    const cats = getActiveCategories();
 
     let rows = '';
     let num = 1;
@@ -845,6 +944,11 @@
       });
     }
 
+    // Category badges shown in meta bar
+    const catBadges = cats.length > 0
+      ? `<div class="meta-item"><span class="meta-label">類別</span><span class="cat-badges">${cats.map(c => `<span class="cat-pill">${c}</span>`).join('')}</span></div>`
+      : '';
+
     sheet.innerHTML = `
       <div class="sheet-header">
         <div class="sheet-title">${title}</div>
@@ -854,6 +958,7 @@
         <div class="meta-item"><span class="meta-label">日期</span>${dateStr}</div>
         <div class="meta-item"><span class="meta-label">地點</span>${location}</div>
         <div class="meta-item"><span class="meta-label">人數</span>${persons.length} 人</div>
+        ${catBadges}
       </div>
       <div class="sheet-table-wrapper">
         <table>
@@ -889,6 +994,9 @@
     wsData.push([title]);
     wsData.push([`日期：${dateStr}`, '', `地點：${location}`, '', `出席人數：${sorted.length} 人`]);
     wsData.push([]);
+    const cats = getActiveCategories();
+    const catStr = cats.length > 0 ? `　類別：${cats.join('、')}` : '';
+    wsData[1][4] = `出席人數：${sorted.length} 人${catStr}`;
     wsData.push(['編號', '姓名', '單位', '簽名']);
     sorted.forEach((p, i) => { wsData.push([i + 1, p.name, p.unit, '']); });
     for (let i = 0; i < 5; i++) { wsData.push([sorted.length + i + 1, '', '', '']); }
@@ -927,13 +1035,71 @@
     URL.revokeObjectURL(url);
   }
 
-  // --- Print ---
+  // --- Print preregistered list ---
   function printSheet() {
     if (persons.length === 0) {
       alert('請先新增出席人員再列印。');
       return;
     }
+    document.body.classList.remove('print-blank');
     window.print();
+  }
+
+  // --- Print blank registration sheet ---
+  function printBlank() {
+    const title = document.getElementById('sheetTitle').value || '臺大醫院醫學研究部學術演講簽到表';
+    const dateVal = document.getElementById('eventDate').value;
+    const location = document.getElementById('eventLocation').value || '';
+    const dateStr = dateVal ? formatDate(dateVal) : '';
+    const cats = getActiveCategories();
+    const catStr = cats.length > 0 ? `　類別：${cats.join('、')}` : '';
+    const BLANK_ROWS = 30;
+
+    let rows = '';
+    for (let i = 1; i <= BLANK_ROWS; i++) {
+      rows += `<tr>
+        <td style="width:48px">${i}</td>
+        <td></td>
+        <td></td>
+        <td><div style="width:120px;height:32px;border-bottom:1px solid #888;display:inline-block"></div></td>
+      </tr>`;
+    }
+
+    document.getElementById('blankSheet').innerHTML = `
+      <div class="blank-header">
+        <div class="blank-title">${title}</div>
+        <div class="blank-subtitle">National Taiwan University Hospital · Department of Medical Research</div>
+      </div>
+      <div class="blank-meta">
+        <div class="blank-meta-item">
+          <span class="blank-meta-label">日期</span>
+          <span class="blank-meta-line">${dateStr}</span>
+        </div>
+        <div class="blank-meta-item">
+          <span class="blank-meta-label">地點</span>
+          <span class="blank-meta-line">${location}</span>
+        </div>
+        ${cats.length > 0 ? `<div class="blank-meta-item"><span class="blank-meta-label">類別</span><span>${cats.join('、')}</span></div>` : ''}
+      </div>
+      <div class="blank-table-wrapper">
+        <table>
+          <thead>
+            <tr>
+              <th style="width:48px">編號</th>
+              <th>姓名</th>
+              <th>單位</th>
+              <th>簽名</th>
+            </tr>
+          </thead>
+          <tbody>${rows}</tbody>
+        </table>
+      </div>
+      <div class="blank-footer">© 2026 台大醫院 醫學研究部 All rights reserved．系統建置：醫學研究部陳巧瑜管理師</div>
+    `;
+
+    document.body.classList.add('print-blank');
+    window.print();
+    setTimeout(() => document.body.classList.remove('print-blank'), 1000);
   }
 
   // Init
